@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{a180aa57-47d1-4c0a-b744-751e038ada71}</ProjectGuid>
+    <RootNamespace>CG2_04</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>KujakuEngine</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IncludePath>$(ProjectDir)..\externals\nlohmann</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(ProjectDir)..\externals\nlohmann</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;USE_IMGUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)externals\DirectXTex;$(ProjectDir)KujakuEngine;$(ProjectDir)..\externals\nlohmann</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
+      <AdditionalOptions>/ignore:4049 /ignore:4098 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" "$(TargetDir )dxcompiler.dll"
+
+copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(ProjectDir)KujakuEngine;$(ProjectDir)..\externals\nlohmann</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll" "$(TargetDir )dxcompiler.dll"
+
+copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="externals\imgui\imgui.cpp" />
+    <ClCompile Include="externals\imgui\imgui_demo.cpp" />
+    <ClCompile Include="externals\imgui\imgui_draw.cpp" />
+    <ClCompile Include="externals\imgui\imgui_impl_dx12.cpp" />
+    <ClCompile Include="externals\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="externals\imgui\imgui_tables.cpp" />
+    <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="KujakuEngine\2d\ImGuiManager.cpp" />
+    <ClCompile Include="KujakuEngine\2d\Sprite.cpp" />
+    <ClCompile Include="KujakuEngine\3d\Camera.cpp" />
+    <ClCompile Include="KujakuEngine\3d\DebugCamera.cpp" />
+    <ClCompile Include="KujakuEngine\3d\DirectionalLight.cpp" />
+    <ClCompile Include="KujakuEngine\3d\GraphicsPipeline.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="KujakuEngine\3d\Model.cpp" />
+    <ClCompile Include="KujakuEngine\3d\PointLight.cpp" />
+    <ClCompile Include="KujakuEngine\3d\RailCameraController.cpp" />
+    <ClCompile Include="KujakuEngine\3d\SpotLight.cpp" />
+    <ClCompile Include="KujakuEngine\3d\WorldTransform.cpp" />
+    <ClCompile Include="KujakuEngine\ai\navigation\Grid.cpp" />
+    <ClCompile Include="KujakuEngine\ai\navigation\NavigationUtil.cpp" />
+    <ClCompile Include="KujakuEngine\ai\navigation\pathfinding\AStar.cpp" />
+    <ClCompile Include="KujakuEngine\ai\navigation\pathfinding\ThetaStar.cpp" />
+    <ClCompile Include="KujakuEngine\ai\navigation\steer\AligmentBehavior.cpp" />
+    <ClCompile Include="KujakuEngine\ai\navigation\steer\ArriveBehavior.cpp" />
+    <ClCompile Include="KujakuEngine\ai\navigation\steer\AvoidanceBehavior.cpp" />
+    <ClCompile Include="KujakuEngine\ai\navigation\steer\CohesionBehavior.cpp" />
+    <ClCompile Include="KujakuEngine\ai\navigation\steer\ISteeringBehavior.cpp" />
+    <ClCompile Include="KujakuEngine\ai\navigation\steer\SeekBehavior.cpp" />
+    <ClCompile Include="KujakuEngine\ai\navigation\steer\SeparationBehavior.cpp" />
+    <ClCompile Include="KujakuEngine\ai\navigation\steer\WanderBehavior.cpp" />
+    <ClCompile Include="KujakuEngine\base\Time.cpp" />
+    <ClCompile Include="KujakuEngine\base\DirectXCommon.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="KujakuEngine\base\GlobalVariables.cpp" />
+    <ClCompile Include="KujakuEngine\base\Logger.cpp" />
+    <ClCompile Include="KujakuEngine\base\StringUtil.cpp" />
+    <ClCompile Include="KujakuEngine\base\TextureManager.cpp" />
+    <ClCompile Include="KujakuEngine\base\WinApp.cpp" />
+    <ClCompile Include="KujakuEngine\input\Input.cpp" />
+    <ClCompile Include="KujakuEngine\KujakuEngine.cpp" />
+    <ClCompile Include="KujakuEngine\math\Easing.cpp" />
+    <ClCompile Include="KujakuEngine\math\MathUtil.cpp" />
+    <ClCompile Include="KujakuEngine\math\Matrix3x3.cpp" />
+    <ClCompile Include="KujakuEngine\math\Matrix4x4.cpp" />
+    <ClCompile Include="KujakuEngine\math\Random.cpp" />
+    <ClCompile Include="KujakuEngine\math\Vector2.cpp" />
+    <ClCompile Include="KujakuEngine\math\Vector3.cpp" />
+    <ClCompile Include="KujakuEngine\shapes\AABB.cpp" />
+    <ClCompile Include="KujakuEngine\shapes\Collider.cpp" />
+    <ClCompile Include="KujakuEngine\shapes\CollisionManager.cpp" />
+    <ClCompile Include="KujakuEngine\shapes\Rect.cpp" />
+    <ClCompile Include="KujakuEngine\shapes\ShapeUtil.cpp" />
+    <ClCompile Include="KujakuEngine\vfx\ParticleEmitter.cpp" />
+    <ClCompile Include="KujakuEngine\vfx\ParticleField.cpp" />
+    <ClCompile Include="KujakuEngine\vfx\InstancingModel.cpp" />
+    <ClCompile Include="KujakuEngine\vfx\ParticleModel.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="externals\imgui\imconfig.h" />
+    <ClInclude Include="externals\imgui\imgui.h" />
+    <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />
+    <ClInclude Include="externals\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="externals\imgui\imgui_internal.h" />
+    <ClInclude Include="externals\imgui\imstb_rectpack.h" />
+    <ClInclude Include="externals\imgui\imstb_textedit.h" />
+    <ClInclude Include="externals\imgui\imstb_truetype.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="KujakuEngine\2d\ImGuiManager.h" />
+    <ClInclude Include="KujakuEngine\2d\Sprite.h" />
+    <ClInclude Include="KujakuEngine\3d\Camera.h" />
+    <ClInclude Include="KujakuEngine\3d\DebugCamera.h" />
+    <ClInclude Include="KujakuEngine\3d\DirectionalLight.h" />
+    <ClInclude Include="KujakuEngine\3d\GraphicsPipeline.h" />
+    <ClInclude Include="KujakuEngine\3d\Model.h" />
+    <ClInclude Include="KujakuEngine\3d\PointLight.h" />
+    <ClInclude Include="KujakuEngine\3d\RailCameraController.h" />
+    <ClInclude Include="KujakuEngine\3d\SpotLight.h" />
+    <ClInclude Include="KujakuEngine\3d\WorldTransform.h" />
+    <ClInclude Include="KujakuEngine\ai\navigation\Grid.h" />
+    <ClInclude Include="KujakuEngine\ai\navigation\NavigationUtil.h" />
+    <ClInclude Include="KujakuEngine\ai\navigation\pathfinding\AStar.h" />
+    <ClInclude Include="KujakuEngine\ai\navigation\pathfinding\ThetaStar.h" />
+    <ClInclude Include="KujakuEngine\ai\navigation\SearchNode.h" />
+    <ClInclude Include="KujakuEngine\ai\navigation\steer\AligmentBehavior.h" />
+    <ClInclude Include="KujakuEngine\ai\navigation\steer\ArriveBehavior.h" />
+    <ClInclude Include="KujakuEngine\ai\navigation\steer\AvoidanceBehavior.h" />
+    <ClInclude Include="KujakuEngine\ai\navigation\steer\CohesionBehavior.h" />
+    <ClInclude Include="KujakuEngine\ai\navigation\steer\ISteeringBehavior.h" />
+    <ClInclude Include="KujakuEngine\ai\navigation\steer\SeekBehavior.h" />
+    <ClInclude Include="KujakuEngine\ai\navigation\steer\SeparationBehavior.h" />
+    <ClInclude Include="KujakuEngine\ai\navigation\steer\WanderBehavior.h" />
+    <ClInclude Include="KujakuEngine\base\Time.h" />
+    <ClInclude Include="KujakuEngine\base\DirectXCommon.h" />
+    <ClInclude Include="KujakuEngine\base\GlobalVariables.h" />
+    <ClInclude Include="KujakuEngine\base\Logger.h" />
+    <ClInclude Include="KujakuEngine\base\StringUtil.h" />
+    <ClInclude Include="KujakuEngine\base\TextureManager.h" />
+    <ClInclude Include="KujakuEngine\base\WinApp.h" />
+    <ClInclude Include="KujakuEngine\input\Input.h" />
+    <ClInclude Include="KujakuEngine\KujakuEngine.h" />
+    <ClInclude Include="KujakuEngine\math\Easing.h" />
+    <ClInclude Include="KujakuEngine\math\MathUtil.h" />
+    <ClInclude Include="KujakuEngine\math\Matrix3x3.h" />
+    <ClInclude Include="KujakuEngine\math\Matrix4x4.h" />
+    <ClInclude Include="KujakuEngine\math\Random.h" />
+    <ClInclude Include="KujakuEngine\math\Vector2.h" />
+    <ClInclude Include="KujakuEngine\math\Vector3.h" />
+    <ClInclude Include="KujakuEngine\math\Vector4.h" />
+    <ClInclude Include="KujakuEngine\shapes\AABB.h" />
+    <ClInclude Include="KujakuEngine\shapes\Collider.h" />
+    <ClInclude Include="KujakuEngine\shapes\CollisionManager.h" />
+    <ClInclude Include="KujakuEngine\shapes\Rect.h" />
+    <ClInclude Include="KujakuEngine\shapes\ShapeUtil.h" />
+    <ClInclude Include="KujakuEngine\vfx\Particle.h" />
+    <ClInclude Include="KujakuEngine\vfx\ParticleEmitter.h" />
+    <ClInclude Include="KujakuEngine\vfx\ParticleField.h" />
+    <ClInclude Include="KujakuEngine\vfx\InstancingModel.h" />
+    <ClInclude Include="KujakuEngine\vfx\ParticleModel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="externals\imgui\LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="KujakuEngine\shader\Object3d.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="KujakuEngine\shader\Particle.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="KujakuEngine\shader\Object3d.PS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="KujakuEngine\shader\Object3d.VS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="KujakuEngine\shader\Particle.PS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="KujakuEngine\shader\Particle.VS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
+      <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>
