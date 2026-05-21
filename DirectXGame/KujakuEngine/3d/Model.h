@@ -40,6 +40,8 @@ public:
 
 	static Model* CreateTriangle(const std::string& textureFilePath, ShaderModel shaderModel);
 
+	static Model* CreateTetrahedron(const std::string& textureFilePath, ShaderModel shaderModel = ShaderModel::kNone);
+
 	/// <summary>
 	/// 描画前処理（全モデル共通・フレームに1回）
 	/// RootSignature / PSO / Viewport / ScissorRect / PrimitiveTopology をセットする

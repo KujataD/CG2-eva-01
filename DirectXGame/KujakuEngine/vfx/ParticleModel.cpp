@@ -220,6 +220,59 @@ ParticleModel* ParticleModel::CreateTriangle(const std::string& textureFilePath,
 	return particle;
 }
 
+ParticleModel* ParticleModel::CreateTetrahedron(const std::string& textureFilePath, bool enableLighting) {
+	ParticleModel* particle = new ParticleModel();
+
+	std::vector<VertexData> vertices;
+
+	const Vector3 v0 = { 1.0f,  1.0f,  1.0f };
+	const Vector3 v1 = { -1.0f, -1.0f,  1.0f };
+	const Vector3 v2 = { -1.0f,  1.0f, -1.0f };
+	const Vector3 v3 = { 1.0f, -1.0f, -1.0f };
+
+	auto AddFace = [&](const Vector3& a, const Vector3& b, const Vector3& c) {
+
+		Vector3 normal =
+			Normalize(Cross(b - a, c - a));
+
+		vertices.push_back({
+			.position = {a.x, a.y, a.z, 1.0f},
+			.texcoord = {0.5f, 0.0f},
+			.normal = normal
+			});
+
+		vertices.push_back({
+			.position = {b.x, b.y, b.z, 1.0f},
+			.texcoord = {0.0f, 1.0f},
+			.normal = normal
+			});
+
+		vertices.push_back({
+			.position = {c.x, c.y, c.z, 1.0f},
+			.texcoord = {1.0f, 1.0f},
+			.normal = normal
+			});
+		};
+
+	// 4面
+	AddFace(v0, v2, v1);
+	AddFace(v0, v1, v3);
+	AddFace(v0, v3, v2);
+	AddFace(v1, v2, v3);
+
+	// MaterialData
+	MaterialData defaultMaterial{};
+	defaultMaterial.enableLighting = enableLighting;
+	defaultMaterial.textureIndex =
+		TextureManager::GetInstance()->LoadTexture(textureFilePath);
+
+	particle->CreateVertexBuffer(vertices);
+	particle->CreateMaterialBuffer(defaultMaterial);
+	particle->Initialize();
+
+	return particle;
+}
+
 void ParticleModel::PreDraw() {
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 	ID3D12GraphicsCommandList* commandList = dxCommon->GetCommandList();

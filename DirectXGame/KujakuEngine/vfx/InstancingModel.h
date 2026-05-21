@@ -36,6 +36,8 @@ public:
 
 	static InstancingModel* CreatePlane(const std::string& textureFilePath, bool enableLighting = false);
 
+	static InstancingModel* CreateTetrahedron(const std::string& textureFilePath, bool enableLighting = false);
+
 	/// <summary>
 	/// 描画前処理（全モデル共通・フレームに1回）
 	/// RootSignature / PSO / Viewport / ScissorRect / PrimitiveTopology をセットする
