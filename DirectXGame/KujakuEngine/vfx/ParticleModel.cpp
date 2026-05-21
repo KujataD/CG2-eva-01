@@ -8,6 +8,7 @@
 #include <filesystem>
 #include <fstream>
 #include <sstream>
+#include <numbers>
 
 namespace KujakuEngine {
 
@@ -170,6 +171,43 @@ ParticleModel* ParticleModel::CreatePlane(const std::string& textureFilePath, bo
           .texcoord = {1.0f, 1.0f},
           .normal = {0.0f, 0.0f, 1.0f}
     }); // 右下
+
+	// MaterialData
+	MaterialData defaultMaterial{};
+	defaultMaterial.enableLighting = enableLighting;
+	defaultMaterial.textureIndex = TextureManager::GetInstance()->LoadTexture(textureFilePath);
+
+	particle->CreateVertexBuffer(vertices);
+	particle->CreateMaterialBuffer(defaultMaterial);
+	particle->Initialize();
+	return particle;
+}
+
+ParticleModel* ParticleModel::CreateTriangle(const std::string& textureFilePath, bool enableLighting) {
+	ParticleModel* particle = new ParticleModel();
+
+	std::vector<VertexData> vertices;
+
+	const float sqrt3 = std::numbers::sqrt3_v<float>;
+	const float halfWidth = sqrt3 * 0.5f;
+
+	vertices.push_back({
+	    .position = {0.0f, 1.0f, 0.0f, 1.0f},
+	    .texcoord = {0.5f, 0.0f},
+	    .normal = {0.0f, 0.0f, 1.0f}
+	}); // 上
+
+	vertices.push_back({
+	    .position = {-halfWidth, -0.5f, 0.0f, 1.0f},
+	    .texcoord = {0.0f, 1.0f},
+	    .normal = {0.0f, 0.0f, 1.0f}
+	}); // 左下
+
+	vertices.push_back({
+	    .position = {halfWidth, -0.5f, 0.0f, 1.0f},
+	    .texcoord = {1.0f, 1.0f},
+	    .normal = {0.0f, 0.0f, 1.0f}
+	}); // 右下
 
 	// MaterialData
 	MaterialData defaultMaterial{};

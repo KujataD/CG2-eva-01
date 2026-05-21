@@ -199,6 +199,53 @@ Model* Model::CreatePlane(const std::string& textureFilePath, ShaderModel shader
 	return model;
 }
 
+Model* Model::CreateTriangle(const std::string& textureFilePath, ShaderModel shaderModel) {
+	Model* model = new Model();
+
+	std::vector<VertexData> vertices;
+
+	vertices.push_back({
+	    .position = {1.0f, 1.0f, 0.0f, 1.0f},
+          .texcoord = {0.0f, 0.0f},
+          .normal = {0.0f, 0.0f, 1.0f}
+    }); // 左上
+	vertices.push_back({
+	    .position = {-1.0f, 1.0f, 0.0f, 1.0f},
+          .texcoord = {1.0f, 0.0f},
+          .normal = {0.0f, 0.0f, 1.0f}
+    }); // 右上
+	vertices.push_back({
+	    .position = {1.0f, -1.0f, 0.0f, 1.0f},
+          .texcoord = {0.0f, 1.0f},
+          .normal = {0.0f, 0.0f, 1.0f}
+    }); // 左下
+	vertices.push_back({
+	    .position = {1.0f, -1.0f, 0.0f, 1.0f},
+          .texcoord = {0.0f, 1.0f},
+          .normal = {0.0f, 0.0f, 1.0f}
+    }); // 左下
+	vertices.push_back({
+	    .position = {-1.0f, 1.0f, 0.0f, 1.0f},
+          .texcoord = {1.0f, 0.0f},
+          .normal = {0.0f, 0.0f, 1.0f}
+    }); // 右上
+	vertices.push_back({
+	    .position = {-1.0f, -1.0f, 0.0f, 1.0f},
+          .texcoord = {1.0f, 1.0f},
+          .normal = {0.0f, 0.0f, 1.0f}
+    }); // 右下
+
+	// MaterialData
+	MaterialData defaultMaterial{};
+	defaultMaterial.enableLighting = static_cast<int32_t>(shaderModel);
+	defaultMaterial.textureIndex = TextureManager::GetInstance()->LoadTexture(textureFilePath);
+
+	model->CreateVertexBuffer(vertices);
+	model->CreateMaterialBuffer(defaultMaterial);
+
+	return model;
+}
+
 void Model::PreDraw() {
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 	ID3D12GraphicsCommandList* commandList = dxCommon->GetCommandList();

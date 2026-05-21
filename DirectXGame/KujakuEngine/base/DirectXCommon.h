@@ -86,6 +86,14 @@ public:
 	int32_t GetBackBufferHeight() const { return backBufferHeight_; }
 	uint32_t GetSwapChainBufferCount() const { return kSwapChainBufferCount; }
 
+	// --- set ---
+	void SetClearColor(Vector4 color) {
+		clearColor_[0] = color.x;
+		clearColor_[1] = color.y;
+		clearColor_[2] = color.z;
+		clearColor_[3] = color.w;
+	}
+
 private:
 	DirectXCommon() = default;
 	~DirectXCommon() = default;

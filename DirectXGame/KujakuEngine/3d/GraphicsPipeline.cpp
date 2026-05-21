@@ -465,6 +465,10 @@ void GraphicsPipeline::CreateInstancingPipelineStateObject() {
 	rasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;  // 裏面（時計回り）を表示しない
 	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID; // 三角形の中を塗りつぶす
 
+	D3D12_RASTERIZER_DESC rasterizerDescParticle{};
+	rasterizerDesc.CullMode = D3D12_CULL_MODE_NONE;  // 裏面（時計回り）を表示しない
+	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID; // 三角形の中を塗りつぶす
+
 	// 7. DepthStencilStateの設定
 	D3D12_DEPTH_STENCIL_DESC depthStencilDescParticle{};
 	depthStencilDescParticle.DepthEnable = true;
@@ -481,7 +485,7 @@ void GraphicsPipeline::CreateInstancingPipelineStateObject() {
 	graphicsPipelineStateDescParticle.pRootSignature = rootSignature_[static_cast<int32_t>(PipelineType::kParticle)].Get();
 	graphicsPipelineStateDescParticle.InputLayout = inputLayoutDesc;
 	graphicsPipelineStateDescParticle.BlendState = blendDesc;
-	graphicsPipelineStateDescParticle.RasterizerState = rasterizerDesc;
+	graphicsPipelineStateDescParticle.RasterizerState = rasterizerDescParticle;
 	graphicsPipelineStateDescParticle.VS = {vertexShaderBlob->GetBufferPointer(), vertexShaderBlob->GetBufferSize()};
 	graphicsPipelineStateDescParticle.PS = {pixelShaderBlob->GetBufferPointer(), pixelShaderBlob->GetBufferSize()};
 	graphicsPipelineStateDescParticle.DepthStencilState = depthStencilDescParticle;

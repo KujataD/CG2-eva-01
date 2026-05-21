@@ -40,6 +40,7 @@ public:
 	static ParticleModel* CreateCube(const std::string& textureFilePath, bool enableLighting = false);
 
 	static ParticleModel* CreatePlane(const std::string& textureFilePath, bool enableLighting = false);
+	static ParticleModel* CreateTriangle(const std::string& textureFilePath, bool enableLighting = false);
 
 	/// <summary>
 	/// 描画前処理（全モデル共通・フレームに1回）

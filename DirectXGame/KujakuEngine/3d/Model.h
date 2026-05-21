@@ -38,6 +38,8 @@ public:
 
 	static Model* CreatePlane(const std::string& textureFilePath, ShaderModel shaderModel = ShaderModel::kNone);
 
+	static Model* CreateTriangle(const std::string& textureFilePath, ShaderModel shaderModel);
+
 	/// <summary>
 	/// 描画前処理（全モデル共通・フレームに1回）
 	/// RootSignature / PSO / Viewport / ScissorRect / PrimitiveTopology をセットする
@@ -58,6 +60,7 @@ public:
 	// --- set ---
 	void SetColor(const Vector4& color) { materialMap_->color = color; }
 	void SetBlendMode(BlendMode mode) { blendMode_ = mode; }
+	void SetTexture(uint32_t textureIndex) { textureIndex_ = textureIndex; }
 
 private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource_;
