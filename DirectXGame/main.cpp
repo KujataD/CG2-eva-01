@@ -23,8 +23,8 @@ void ChangeScene();
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	// エンジンの初期化
-	KujakuEngine::Initialize(L"LE2B_04_オオツカ_ダイチ_CG2_評価課題01");
-	//, { 0.0f, 0.0f, 0.01f, 1.0f }
+	KujakuEngine::Initialize(L"LE2B_04_オオツカ_ダイチ_CG2_評価課題01", { 0.0f, 0.0f, 0.01f, 1.0f });
+	
 	//triangleScene = std::make_unique<TriangleScene>();
 
 	Camera camera;
@@ -35,14 +35,18 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	WorldTransform worldTransformTetrahedron;
 	worldTransformTetrahedron.Initialize();
 
-	std::unique_ptr<Model> tetrahedronModel = std::unique_ptr<Model>(Model::CreateTetrahedron("Resources/white1x1.png", ShaderModel::kBlingPhongReflection));
+	std::unique_ptr<Model> tetrahedronModel = std::unique_ptr<Model>(Model::CreateTriangle("Resources/white1x1.png"));
 
-	std::unique_ptr<ParticleModel> particleModel = std::unique_ptr<ParticleModel>(ParticleModel::CreateTetrahedron("Resources/white1x1.png", true));
+	std::unique_ptr<ParticleModel> particleModel = std::unique_ptr<ParticleModel>(ParticleModel::CreateTriangle("Resources/white1x1.png", true));
 	particleModel->Initialize();
 
 	ParticleEmitter particleEmitter;
 	particleEmitter.Initialize(particleModel.get());
-
+	particleEmitter.emitShape_ = ParticleEmitter::kEmitShapeModelEdge;
+	particleEmitter.count_ = 20;
+	particleEmitter.SetSourceModel(tetrahedronModel.get(), &worldTransformTetrahedron);
+	particleEmitter.particleScale_ = {0.05f, 0.05f, 0.05f};
+	
 	// メインループ
 	while (KujakuEngine::Update()) {
 		// ======================================
@@ -77,7 +81,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		ParticleModel::PostDraw();
 
 		Model::PreDraw();
-		tetrahedronModel->Draw(worldTransformTetrahedron, camera);
+		tetrahedronModel->Draw(worldTransformTetrahedron, camera, kFillModeWireframe);
 		Model::PostDraw();
 
 

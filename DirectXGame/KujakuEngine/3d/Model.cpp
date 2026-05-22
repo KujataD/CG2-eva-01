@@ -464,8 +464,13 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 }
 
 void Model::CreateVertexBuffer(const std::vector<VertexData>& vertices) {
+	// 頂点保存
+	vertices_ = vertices;
+
+	// 頂点数を取得
 	vertexCount_ = static_cast<uint32_t>(vertices.size());
 
+	// 頂点数分のリソース作成
 	vertexResource_ = DirectXCommon::GetInstance()->CreateBufferResource(sizeof(VertexData) * vertexCount_);
 
 	vertexBufferView_.BufferLocation = vertexResource_->GetGPUVirtualAddress();

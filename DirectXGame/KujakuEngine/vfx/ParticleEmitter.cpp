@@ -63,14 +63,73 @@ void ParticleEmitter::Emit() {
 
 Particle ParticleEmitter::MakeParticle() {
 	Particle particle;
-	Vector3 randomTranslation = {Random::GetRandom(-1.0f * scale_.x, 1.0f * scale_.x), Random::GetRandom(-1.0f * scale_.y, 1.0f * scale_.y), Random::GetRandom(-1.0f * scale_.z, 1.0f * scale_.z)};
 
-	particle.translation = translation_ + randomTranslation;
-	particle.velocity = {Random::GetRandom(-1.0f, 1.0f), Random::GetRandom(-1.0f, 1.0f), Random::GetRandom(-1.0f, 1.0f)};
+	switch (emitShape_) {
+	case KujakuEngine::ParticleEmitter::kEmitShapeBox: {
+		Vector3 randomTranslation = {Random::GetRandom(-1.0f * scale_.x, 1.0f * scale_.x), Random::GetRandom(-1.0f * scale_.y, 1.0f * scale_.y), Random::GetRandom(-1.0f * scale_.z, 1.0f * scale_.z)};
+		particle.translation = translation_ + randomTranslation;
+		particle.velocity = {Random::GetRandom(-1.0f, 1.0f), Random::GetRandom(-1.0f, 1.0f), Random::GetRandom(-1.0f, 1.0f)};
+		break;
+	}
+	case KujakuEngine::ParticleEmitter::kEmitShapeModelEdge: {
+		assert(sourceModel_);
+		assert(sourceWorldTransform_);
+		particle.translation = GetRandomPosModelEdge();
+		particle.velocity = {0.0f, 0.0f, 0.0f};
+		break;
+	}
+	default: {
+		break;
+	}
+	}
+
+	particle.scale = particleScale_;
 	particle.color = {Random::GetRandom(0.0f, 1.0f), Random::GetRandom(0.0f, 1.0f), Random::GetRandom(0.0f, 1.0f), 1.0f};
 	particle.lifeTime = Random::GetRandom(1.0f, 3.0f);
 	particle.currentTime = 0.0f;
 	return particle;
+}
+
+Vector3 ParticleEmitter::GetRandomPosModelEdge() {
+	const auto& vertices = sourceModel_->GetVertices();
+
+	if (vertices.size() < 3) {
+		return translation_;
+	}
+
+	// 三角形を一つ選ぶ
+	uint32_t triangleIndex = Random::GetRandom(0, static_cast<int>(vertices.size() / 3 - 1)) * 3;
+
+	// その頂点座標を取得
+	Vector3 triangleVertices[3];
+
+	for (int32_t i = 0; i < 3; i++) {
+		triangleVertices[i] = {vertices[triangleIndex + i].position.x, vertices[triangleIndex + i].position.y, vertices[triangleIndex + i].position.z};
+	}
+
+	// 三角形の3辺から1つ選ぶ
+	int edge = Random::GetRandom(0, 2);
+
+	Vector3 a;
+	Vector3 b;
+
+	if (edge == 0) {
+		a = triangleVertices[0];
+		b = triangleVertices[1];
+	} else if (edge == 1) {
+		a = triangleVertices[1];
+		b = triangleVertices[2];
+	} else {
+		a = triangleVertices[2];
+		b = triangleVertices[0];
+	}
+
+	// ここが重要：tは1つだけ
+	float t = Random::GetRandom(0.0f, 1.0f);
+	Vector3 localPos = a + (b - a) * t;
+
+	// モデルのワールド行列から変換
+	return Transform(localPos, sourceWorldTransform_->matWorld_);
 }
 
 } // namespace KujakuEngine

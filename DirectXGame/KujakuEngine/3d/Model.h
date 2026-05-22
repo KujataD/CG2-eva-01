@@ -38,7 +38,7 @@ public:
 
 	static Model* CreatePlane(const std::string& textureFilePath, ShaderModel shaderModel = ShaderModel::kNone);
 
-	static Model* CreateTriangle(const std::string& textureFilePath, ShaderModel shaderModel);
+	static Model* CreateTriangle(const std::string& textureFilePath, ShaderModel shaderModel = ShaderModel::kNone);
 
 	static Model* CreateTetrahedron(const std::string& textureFilePath, ShaderModel shaderModel = ShaderModel::kNone);
 
@@ -64,7 +64,18 @@ public:
 	void SetBlendMode(BlendMode mode) { blendMode_ = mode; }
 	void SetTexture(uint32_t textureIndex) { textureIndex_ = textureIndex; }
 
+	// --- get ---
+	
+	/// <summary>
+	/// 頂点の取得
+	/// </summary>
+	/// <returns></returns>
+	const std::vector<VertexData>& GetVertices() const { return vertices_; }
+
 private:
+	Model(const Model&) = delete;
+	Model& operator=(const Model&) = delete;
+
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource_;
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_{};
 	uint32_t vertexCount_ = 0;
@@ -76,11 +87,10 @@ private:
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU_{};
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU_{};
 
+	// モデル頂点
+	std::vector<VertexData> vertices_;
+
 	uint32_t textureIndex_;
-
-	Model(const Model&) = delete;
-	Model& operator=(const Model&) = delete;
-
 	static ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
 	static MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 	void CreateVertexBuffer(const std::vector<VertexData>& vertices);
