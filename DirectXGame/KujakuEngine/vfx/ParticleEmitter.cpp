@@ -75,7 +75,7 @@ Particle ParticleEmitter::MakeParticle() {
 		assert(sourceModel_);
 		assert(sourceWorldTransform_);
 		particle.translation = GetRandomPosModelEdge();
-		particle.velocity = {0.0f, 0.0f, 0.0f};
+		particle.velocity = {Random::GetRandom(-0.1f, 0.1f), Random::GetRandom(-0.1f, 0.1f), Random::GetRandom(-0.1f, 0.1f)};
 		break;
 	}
 	default: {
@@ -85,7 +85,8 @@ Particle ParticleEmitter::MakeParticle() {
 
 	particle.scale = particleScale_;
 	particle.color = {Random::GetRandom(0.0f, 1.0f), Random::GetRandom(0.0f, 1.0f), Random::GetRandom(0.0f, 1.0f), 1.0f};
-	particle.lifeTime = Random::GetRandom(1.0f, 3.0f);
+	particle.lifeTime = Random::GetRandom(lifeTimeMinMax_.x, lifeTimeMinMax_.y);
+	particle.rotation.z = Random::GetRandom(-std::numbers::pi_v<float>, std::numbers::pi_v<float>);
 	particle.currentTime = 0.0f;
 	return particle;
 }

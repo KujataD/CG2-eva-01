@@ -56,6 +56,7 @@ public:
 	EmitShape emitShape_ = kEmitShapeBox;
 
 	Vector3 particleScale_ = {1.0f, 1.0f, 1.0f};
+	Vector2 lifeTimeMinMax_ = {1.0f, 3.0f};
 private:
 	// モデルを使って生成する場合に必要
 	Model* sourceModel_ = nullptr;
