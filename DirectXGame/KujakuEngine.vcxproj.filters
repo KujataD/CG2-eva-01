@@ -67,6 +67,9 @@
     <Filter Include="ソース ファイル\Scenes">
       <UniqueIdentifier>{6b8d62c2-236e-4579-9e47-66149089695b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GameObject">
+      <UniqueIdentifier>{acf7ff48-38bd-4883-8c84-955e649c0a43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -242,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="CinemaScene.cpp">
       <Filter>ソース ファイル\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Butterfly.cpp">
+      <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -427,6 +433,9 @@
     </ClInclude>
     <ClInclude Include="CinemaScene.h">
       <Filter>ソース ファイル\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Butterfly.h">
+      <Filter>ソース ファイル\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

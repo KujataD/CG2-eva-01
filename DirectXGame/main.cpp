@@ -52,7 +52,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	worldTransformButterfly_left.Initialize();
 	worldTransformButterfly_left.parent_ = &worldTransformButterfly;
 
-	std::unique_ptr<Model> modelButterflyRight = std::unique_ptr<Model>(Model::CreateFromOBJ("enemy"));
+	std::unique_ptr<Model> modelButterflyRight = std::unique_ptr<Model>(Model::CreateFromOBJ("butterfly_right"));
 	std::unique_ptr<Model> modelButterflyLeft = std::unique_ptr<Model>(Model::CreateFromOBJ("butterfly_left"));
 
 	std::unique_ptr<ParticleModel> particleModel = std::unique_ptr<ParticleModel>(ParticleModel::CreateTriangle("Resources/white1x1.png", true));
@@ -138,7 +138,6 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		ImGui::DragFloat("ParticleEmitter size", &particleAllSize, 0.01f);
 
 		particleEmitter.count_ = static_cast<uint32_t>(particleCount);
-
 		particleEmitter2.lifeTimeMinMax_ = particleEmitter.lifeTimeMinMax_;
 		particleEmitter2.count_ = particleEmitter.count_;
 		particleEmitter2.frequency_ = particleEmitter.frequency_;

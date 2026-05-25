@@ -74,7 +74,7 @@ Particle ParticleEmitter::MakeParticle() {
 	case KujakuEngine::ParticleEmitter::kEmitShapeModelEdge: {
 		assert(sourceWorldTransform_);
 		particle.translation = GetRandomPosModelEdge();
-		particle.velocity = {Random::GetRandom(-0.1f, 0.1f), Random::GetRandom(-0.1f, 0.1f), Random::GetRandom(-0.1f, 0.1f)};
+		particle.velocity = {Random::GetRandom(-0.3f, 0.3f), Random::GetRandom(-0.3f, 0.3f), Random::GetRandom(-0.3f, 0.3f)};
 		break;
 	}
 	default: {

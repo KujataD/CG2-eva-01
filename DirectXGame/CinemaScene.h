@@ -33,22 +33,10 @@ private:
 
 	// --- 蝶 ---
 
-	// ワールド変換
-	KujakuEngine::WorldTransform worldTransformButterfly_;
-	KujakuEngine::WorldTransform worldTransformButterflyWingRight_;
-	KujakuEngine::WorldTransform worldTransformButterflyWingLeft_;
-
 	// 羽のモデル
 	std::unique_ptr<KujakuEngine::Model> modelButterflyWingRight_;
 	std::unique_ptr<KujakuEngine::Model> modelButterflyWingLeft_;
 
 	// 鱗粉のパーティクルモデル
 	std::unique_ptr<KujakuEngine::ParticleModel> particleModelButterflyScales_;
-
-	// 右翅のパーティクルエミッター
-	KujakuEngine::ParticleEmitter particleEmitterButterflyWingRight_;
-
-	// 左翅のパーティクルエミッター
-	KujakuEngine::ParticleEmitter particleEmitterButterflyWingLeft_;
-
 };
