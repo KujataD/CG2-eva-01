@@ -72,7 +72,6 @@ Particle ParticleEmitter::MakeParticle() {
 		break;
 	}
 	case KujakuEngine::ParticleEmitter::kEmitShapeModelEdge: {
-		assert(sourceModel_);
 		assert(sourceWorldTransform_);
 		particle.translation = GetRandomPosModelEdge();
 		particle.velocity = {Random::GetRandom(-0.1f, 0.1f), Random::GetRandom(-0.1f, 0.1f), Random::GetRandom(-0.1f, 0.1f)};
@@ -84,7 +83,7 @@ Particle ParticleEmitter::MakeParticle() {
 	}
 
 	particle.scale = particleScale_;
-	particle.color = {Random::GetRandom(0.0f, 1.0f), Random::GetRandom(0.0f, 1.0f), Random::GetRandom(0.0f, 1.0f), 1.0f};
+	particle.color = {Random::GetRandom(0.0f, 0.8f), Random::GetRandom(0.0f, 0.8f), Random::GetRandom(0.8f, 1.0f), 1.0f};
 	particle.lifeTime = Random::GetRandom(lifeTimeMinMax_.x, lifeTimeMinMax_.y);
 	particle.rotation.z = Random::GetRandom(-std::numbers::pi_v<float>, std::numbers::pi_v<float>);
 	particle.currentTime = 0.0f;
@@ -92,7 +91,7 @@ Particle ParticleEmitter::MakeParticle() {
 }
 
 Vector3 ParticleEmitter::GetRandomPosModelEdge() {
-	const auto& vertices = sourceModel_->GetVertices();
+	const auto& vertices = vertices_;
 
 	if (vertices.size() < 3) {
 		return translation_;
@@ -127,7 +126,7 @@ Vector3 ParticleEmitter::GetRandomPosModelEdge() {
 
 	// ここが重要：tは1つだけ
 	float t = Random::GetRandom(0.0f, 1.0f);
-	Vector3 localPos = a + (b - a) * t;
+	Vector3 localPos = Lerp(a, b, t);
 
 	// モデルのワールド行列から変換
 	return Transform(localPos, sourceWorldTransform_->matWorld_);

@@ -2,8 +2,8 @@
 #include "Particle.h"
 #include "ParticleField.h"
 #include "ParticleModel.h"
-#include <math/MathUtil.h>
 #include <3d/Model.h>
+#include <math/MathUtil.h>
 
 #include <list>
 #include <vector>
@@ -29,8 +29,8 @@ public:
 	// --- set ---
 	void AddField(AccelerationField& field) { accelerationFields_.push_back(field); }
 	void SetIsActiveField(bool isActive) { isActiveField_ = isActive; }
-	void SetSourceModel(Model* sourceModel, WorldTransform* sourceWorldTransform) {
-		sourceModel_ = sourceModel;
+	void SetSourceVertices(const std::vector<VertexData>& vertices, WorldTransform* sourceWorldTransform) {
+		vertices_ = vertices;
 		sourceWorldTransform_ = sourceWorldTransform;
 	}
 
@@ -57,9 +57,10 @@ public:
 
 	Vector3 particleScale_ = {1.0f, 1.0f, 1.0f};
 	Vector2 lifeTimeMinMax_ = {1.0f, 3.0f};
+
 private:
 	// モデルを使って生成する場合に必要
-	Model* sourceModel_ = nullptr;
+	std::vector<VertexData> vertices_;
 	WorldTransform* sourceWorldTransform_ = nullptr;
 
 	// パーティクルモデル
@@ -70,7 +71,6 @@ private:
 	// フィールド
 	std::list<AccelerationField> accelerationFields_;
 	bool isActiveField_ = true;
-
 };
 
 } // namespace KujakuEngine

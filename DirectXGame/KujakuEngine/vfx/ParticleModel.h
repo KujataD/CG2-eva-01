@@ -102,7 +102,7 @@ private:
 
 	uint32_t textureIndex_;
 
-	static inline const uint32_t kMaxInstance = 1000;
+	static inline const uint32_t kMaxInstance = 10000;
 
 	D3D12_CPU_DESCRIPTOR_HANDLE instancingSrvHandleCPU_{};
 	D3D12_GPU_DESCRIPTOR_HANDLE instancingSrvHandleGPU_{};
