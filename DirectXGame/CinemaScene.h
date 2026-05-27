@@ -1,4 +1,5 @@
 #pragma once
+#include "Butterfly.h"
 #include <KujakuEngine.h>
 
 class CinemaScene {
@@ -25,18 +26,20 @@ public:
 	bool IsFinished() const { return KujakuEngine::Input::GetKeyTrigger(DIK_SPACE); }
 
 private:
-
 	// --- シーン ---
 
 	// カメラ
 	KujakuEngine::Camera camera_;
+	KujakuEngine::DebugCamera debugCamera_;
 
 	// --- 蝶 ---
 
 	// 羽のモデル
-	std::unique_ptr<KujakuEngine::Model> modelButterflyWingRight_;
-	std::unique_ptr<KujakuEngine::Model> modelButterflyWingLeft_;
+	std::unique_ptr<KujakuEngine::Model> modelButterflyWingRight_ = nullptr;
+	std::unique_ptr<KujakuEngine::Model> modelButterflyWingLeft_ = nullptr;
 
 	// 鱗粉のパーティクルモデル
-	std::unique_ptr<KujakuEngine::ParticleModel> particleModelButterflyScales_;
+	std::unique_ptr<KujakuEngine::ParticleModel> particleModelButterflyScales_ = nullptr;
+
+	std::unique_ptr<Butterfly> butterfly_ = nullptr;
 };

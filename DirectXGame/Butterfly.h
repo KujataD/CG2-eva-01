@@ -7,9 +7,13 @@ public:
 	Butterfly() = default;
 	~Butterfly() = default;
 
-	void Initialize(KujakuEngine::Model* modelWingLeft, KujakuEngine::Model* modelWingRight, const KujakuEngine::Camera* camera);
+	void Initialize(KujakuEngine::Model* modelWingLeft, KujakuEngine::Model* modelWingRight, KujakuEngine::ParticleModel* particleModelTriangle, const KujakuEngine::Camera* camera);
 	void Update();
 	void Draw();
+
+private:
+	void UpdateAnim();
+	void UpdateParticle();
 
 private:
 	// ワールド変換
@@ -20,18 +24,24 @@ private:
 	KujakuEngine::Model* modelWingLeft_ = nullptr;
 	KujakuEngine::Model* modelWingRight_ = nullptr;
 
+	// パーティクル
+	// ------------------------------------------
+	KujakuEngine::ParticleModel* particleModelTriangle_ = nullptr;
+
 	// 右翅のパーティクルエミッター
 	KujakuEngine::ParticleEmitter particleEmitterButterflyWingRight_;
 
 	// 左翅のパーティクルエミッター
 	KujakuEngine::ParticleEmitter particleEmitterButterflyWingLeft_;
 
-	// アニメーション
-	float animWingTimer_ = 0.0f;
-	float animFlappingTimer_ = 0.0f;
+	// パーティクルのスケール
+	static inline float particleAllScale_ = 0.02f;
 
-	static inline float animWingDuration_ = 1.0f;
-	static inline float animFlappingDuration_ = 1.0f;
+	// アニメーション
+	float animWingRotationTimer_ = 0.0f;
+	float animTranslationTimer_ = 0.0f;
+
+	static inline float animWingRotationDuration_ = 1.0f;
 	static inline float animWingRotationMax_ = std::numbers::pi_v<float> * 0.45f;
 	static inline float animWingRotationMin_ = -std::numbers::pi_v<float> * 0.3f;
 
