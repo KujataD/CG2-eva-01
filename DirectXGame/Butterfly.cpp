@@ -52,8 +52,8 @@ void Butterfly::Initialize(KujakuEngine::Model* modelWingLeft, KujakuEngine::Mod
 	animWingRotationTimer_ = 0.0f;
 	animTranslationTimer_ = 0.0f;
 
-	// シーンの色変更
-	DirectXCommon::GetInstance()->SetClearColor({0.0f, 0.0f, 0.01f, 1.0f});
+	modelWingLeft_->SetColor({1.0f, 1.0f, 1.0f, 0.05f});
+	modelWingRight_->SetColor({1.0f, 1.0f, 1.0f, 0.05f});
 }
 
 void Butterfly::Update() {
@@ -65,6 +65,9 @@ void Butterfly::Update() {
 }
 
 void Butterfly::Draw() {
+	modelWingLeft_->Draw(worldTransformButterflyWingLeft_, *camera_, kFillModeWireframe);
+	modelWingRight_->Draw(worldTransformButterflyWingRight_, *camera_, kFillModeWireframe);
+
 	ParticleModel::PreDraw();
 	particleEmitterButterflyWingLeft_.Draw();
 	ParticleModel::PostDraw();
@@ -99,6 +102,9 @@ void Butterfly::UpdateAnim() {
 	animTranslationTimer_ += Time::GetDeltaTime();
 	worldTransformButterfly_.translation_.x = std::cosf(animTranslationTimer_ * 0.5f);
 	worldTransformButterfly_.translation_.y = std::sinf(animTranslationTimer_);
+	if (animTranslationTimer_ >= std::numbers::pi_v<float> * 4.0f) {
+		animTranslationTimer_ = 0.0f;
+	}
 
 	// 各ワールドトランスフォームの更新
 	// ------------------------------------------

@@ -243,10 +243,16 @@
     <ClCompile Include="TriangleScene.cpp">
       <Filter>ソース ファイル\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="CinemaScene.cpp">
+    <ClCompile Include="ButteflyScene.cpp">
       <Filter>ソース ファイル\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Butterfly.cpp">
+      <Filter>ソース ファイル\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SpiderScene.cpp">
+      <Filter>ソース ファイル\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Spider.cpp">
       <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
@@ -431,10 +437,16 @@
     <ClInclude Include="TriangleScene.h">
       <Filter>ソース ファイル\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="CinemaScene.h">
+    <ClInclude Include="ButterflyScene.h">
       <Filter>ソース ファイル\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Butterfly.h">
+      <Filter>ソース ファイル\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SpiderScene.h">
+      <Filter>ソース ファイル\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Spider.h">
       <Filter>ソース ファイル\GameObject</Filter>
     </ClInclude>
   </ItemGroup>

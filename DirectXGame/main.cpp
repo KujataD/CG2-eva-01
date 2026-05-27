@@ -1,6 +1,7 @@
 #include <KujakuEngine.h>
 
-#include "CinemaScene.h"
+#include "ButterflyScene.h"
+#include "SpiderScene.h"
 #include "TriangleScene.h"
 
 using namespace KujakuEngine;
@@ -8,13 +9,15 @@ using namespace KujakuEngine;
 enum class Scene {
 	kUnknown = 0,
 	kTriangle,
-	kCinema,
+	kButtefly,
+	kSpider,
 };
 
 Scene scene = Scene::kUnknown;
 
 std::unique_ptr<TriangleScene> triangleScene = nullptr;
-std::unique_ptr<CinemaScene> cinemaScene = nullptr;
+std::unique_ptr<ButterflyScene> butterflyScene = nullptr;
+std::unique_ptr<SpiderScene> spiderScene = nullptr;
 
 void InitScene();
 void UpdateScene();
@@ -28,7 +31,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	KujakuEngine::Initialize(L"LE2B_04_オオツカ_ダイチ_CG2_評価課題01");
 
 	// タイトルシーンの初期化
-	scene = Scene::kCinema;
+	scene = Scene::kButtefly;
 
 	InitScene();
 
@@ -71,10 +74,16 @@ void InitScene() {
 			triangleScene->Initialize();
 		}
 		break;
-	case Scene::kCinema:
-		if (!cinemaScene) {
-			cinemaScene = std::make_unique<CinemaScene>();
-			cinemaScene->Initialize();
+	case Scene::kButtefly:
+		if (!butterflyScene) {
+			butterflyScene = std::make_unique<ButterflyScene>();
+			butterflyScene->Initialize();
+		}
+		break;
+	case Scene::kSpider:
+		if (!spiderScene) {
+			spiderScene = std::make_unique<SpiderScene>();
+			spiderScene->Initialize();
 		}
 		break;
 	default:
@@ -92,25 +101,41 @@ void ChangeScene() {
 			triangleScene->Initialize();
 		} else if (triangleScene->IsFinished()) {
 			// シーン変更
-			scene = Scene::kCinema;
+			scene = Scene::kButtefly;
 			// 旧シーンの解放
 			triangleScene.reset();
 			// 新シーンの生成と初期化
-			cinemaScene = std::make_unique<CinemaScene>();
-			cinemaScene->Initialize();
+			butterflyScene = std::make_unique<ButterflyScene>();
+			butterflyScene->Initialize();
 		}
 		break;
-	case Scene::kCinema:
-		if (cinemaScene->GetReloadRequested()) {
+	case Scene::kButtefly:
+		if (butterflyScene->GetReloadRequested()) {
 			// シーンリロード
-			cinemaScene.reset();
-			cinemaScene = std::make_unique<CinemaScene>();
-			cinemaScene->Initialize();
-		} else if (cinemaScene->IsFinished()) {
+			butterflyScene.reset();
+			butterflyScene = std::make_unique<ButterflyScene>();
+			butterflyScene->Initialize();
+		} else if (butterflyScene->IsFinished()) {
+			// シーン変更
+			scene = Scene::kSpider;
+			// 旧シーンの解放
+			butterflyScene.reset();
+			// 新シーンの生成と初期化
+			spiderScene = std::make_unique<SpiderScene>();
+			spiderScene->Initialize();
+		}
+		break;
+	case Scene::kSpider:
+		if (spiderScene->GetReloadRequested()) {
+			// シーンリロード
+			spiderScene.reset();
+			spiderScene = std::make_unique<SpiderScene>();
+			spiderScene->Initialize();
+		} else if (spiderScene->IsFinished()) {
 			// シーン変更
 			scene = Scene::kTriangle;
 			// 旧シーンの解放
-			cinemaScene.reset();
+			spiderScene.reset();
 			// 新シーンの生成と初期化
 			triangleScene = std::make_unique<TriangleScene>();
 			triangleScene->Initialize();
@@ -124,8 +149,11 @@ void UpdateScene() {
 	case Scene::kTriangle:
 		triangleScene->Update();
 		break;
-	case Scene::kCinema:
-		cinemaScene->Update();
+	case Scene::kButtefly:
+		butterflyScene->Update();
+		break;
+	case Scene::kSpider:
+		spiderScene->Update();
 		break;
 	default:
 		break;
@@ -137,8 +165,11 @@ void DrawScene() {
 	case Scene::kTriangle:
 		triangleScene->Draw();
 		break;
-	case Scene::kCinema:
-		cinemaScene->Draw();
+	case Scene::kButtefly:
+		butterflyScene->Draw();
+		break;
+	case Scene::kSpider:
+		spiderScene->Draw();
 		break;
 	default:
 		break;

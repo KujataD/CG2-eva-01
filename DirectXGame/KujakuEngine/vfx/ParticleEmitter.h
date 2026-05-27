@@ -16,6 +16,7 @@ public:
 	enum EmitShape {
 		kEmitShapeBox,       // !< 従来の直方体からランダム生成する。
 		kEmitShapeModelEdge, // !< モデルの辺からランダム生成する。（SetSourceModel必要）
+		kEmitSegmentEdge,    // !< 線分からランダム生成する。（SetSourceModel必要）
 	};
 
 public:
@@ -33,6 +34,7 @@ public:
 		vertices_ = vertices;
 		sourceWorldTransform_ = sourceWorldTransform;
 	}
+	void SetSourceSegments(const std::vector<Segment>& segments) { segments_ = segments; }
 
 	// --- get ---
 
@@ -40,6 +42,7 @@ public:
 	/// ソースモデルの辺のランダムな座標を取得します。
 	/// </summary>
 	Vector3 GetRandomPosModelEdge();
+	Vector3 GetRandomPosSegmentsEdge();
 
 private:
 	Particle MakeParticle();
@@ -58,9 +61,19 @@ public:
 	Vector3 particleScale_ = {1.0f, 1.0f, 1.0f};
 	Vector2 lifeTimeMinMax_ = {1.0f, 3.0f};
 
+	// セグメント発生用：ベジェ曲線の制御点を値だけ上へ持ち上げる。
+	float segmentCurveHeightRate_ = 0.12f;
+
 private:
+	// 生成可能か
+	bool canEmit_ = true;
+
 	// モデルを使って生成する場合に必要
 	std::vector<VertexData> vertices_;
+
+	// 線分を使って生成する場合に必要
+	std::vector<Segment> segments_;
+
 	WorldTransform* sourceWorldTransform_ = nullptr;
 
 	// パーティクルモデル

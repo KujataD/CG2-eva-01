@@ -8,6 +8,7 @@ using namespace ShapeUtil;
 void ParticleEmitter::Initialize(ParticleModel* model) { model_ = model; }
 
 void ParticleEmitter::Update(float deltaTime, const Camera& camera) {
+
 	frequencyTime_ += deltaTime;        // 時刻を進める
 	if (frequency_ <= frequencyTime_) { // 頻度より大きいなら発生
 		Emit();                         // パーティクル生成処理
@@ -62,8 +63,12 @@ void ParticleEmitter::Emit() {
 }
 
 Particle ParticleEmitter::MakeParticle() {
-	Particle particle;
+	Particle particle{};
 
+	particle.scale = particleScale_;
+	particle.lifeTime = Random::GetRandom(lifeTimeMinMax_.x, lifeTimeMinMax_.y);
+	particle.rotation.z = Random::GetRandom(-std::numbers::pi_v<float>, std::numbers::pi_v<float>);
+	particle.currentTime = 0.0f;
 	switch (emitShape_) {
 	case KujakuEngine::ParticleEmitter::kEmitShapeBox: {
 		Vector3 randomTranslation = {Random::GetRandom(-1.0f * scale_.x, 1.0f * scale_.x), Random::GetRandom(-1.0f * scale_.y, 1.0f * scale_.y), Random::GetRandom(-1.0f * scale_.z, 1.0f * scale_.z)};
@@ -72,9 +77,16 @@ Particle ParticleEmitter::MakeParticle() {
 		break;
 	}
 	case KujakuEngine::ParticleEmitter::kEmitShapeModelEdge: {
+		particle.color = {Random::GetRandom(0.0f, 0.8f), Random::GetRandom(0.0f, 0.8f), Random::GetRandom(0.8f, 1.0f), 1.0f};
 		assert(sourceWorldTransform_);
 		particle.translation = GetRandomPosModelEdge();
 		particle.velocity = {Random::GetRandom(-0.3f, 0.3f), Random::GetRandom(-0.3f, 0.3f), Random::GetRandom(-0.3f, 0.3f)};
+		break;
+	}
+	case KujakuEngine::ParticleEmitter::kEmitSegmentEdge: {
+		particle.color = {Random::GetRandom(0.8f, 1.0f), Random::GetRandom(0.0f, 0.8f), Random::GetRandom(0.0f, 0.8f), 1.0f};
+		particle.translation = GetRandomPosSegmentsEdge();
+		particle.scale = {Random::GetRandom(0.1f, 1.0f) * particleScale_.x, Random::GetRandom(0.1f, 1.0f) * particleScale_.y, Random::GetRandom(0.1f, 1.0f) * particleScale_.z};
 		break;
 	}
 	default: {
@@ -82,11 +94,10 @@ Particle ParticleEmitter::MakeParticle() {
 	}
 	}
 
-	particle.scale = particleScale_;
-	particle.color = {Random::GetRandom(0.0f, 0.8f), Random::GetRandom(0.0f, 0.8f), Random::GetRandom(0.8f, 1.0f), 1.0f};
-	particle.lifeTime = Random::GetRandom(lifeTimeMinMax_.x, lifeTimeMinMax_.y);
-	particle.rotation.z = Random::GetRandom(-std::numbers::pi_v<float>, std::numbers::pi_v<float>);
-	particle.currentTime = 0.0f;
+	if (!canEmit_) {
+		particle.lifeTime = 0.0f;
+		canEmit_ = true;
+	}
 	return particle;
 }
 
@@ -94,6 +105,7 @@ Vector3 ParticleEmitter::GetRandomPosModelEdge() {
 	const auto& vertices = vertices_;
 
 	if (vertices.size() < 3) {
+		canEmit_ = false;
 		return translation_;
 	}
 
@@ -130,6 +142,32 @@ Vector3 ParticleEmitter::GetRandomPosModelEdge() {
 
 	// モデルのワールド行列から変換
 	return Transform(localPos, sourceWorldTransform_->matWorld_);
+}
+
+Vector3 ParticleEmitter::GetRandomPosSegmentsEdge() {
+	if (segments_.empty()) {
+		canEmit_ = false;
+		return translation_;
+	}
+
+	// 線分を一つ選ぶ
+	uint32_t segmentIndex = Random::GetRandom(0, static_cast<int>(segments_.size() - 1));
+
+	// その頂点座標を取得
+	Vector3 a = segments_[segmentIndex].origin;
+	Vector3 b = segments_[segmentIndex].diff + segments_[segmentIndex].origin;
+	float length = Length(segments_[segmentIndex].diff);
+
+	if (length <= 0.0f) {
+		return a;
+	}
+
+	// 中点を持ち上げて、ベジェに使う。ちょっち足っぽくなるかね。
+	Vector3 control = Lerp(a, b, 0.5f);
+	control.y += length * segmentCurveHeightRate_;
+
+	float t = Random::GetRandom(0.0f, 1.0f);
+	return Bezier(a, control, b, t);
 }
 
 } // namespace KujakuEngine

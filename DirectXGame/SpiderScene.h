@@ -1,10 +1,10 @@
 #pragma once
-#include "Butterfly.h"
+#include "Spider.h"
 #include <KujakuEngine.h>
 
-class CinemaScene {
+class SpiderScene {
 public:
-	enum class CinemaMode { Single, Double };
+	enum class CinemaMode { Buttefly };
 
 public:
 	void Initialize();
@@ -32,14 +32,8 @@ private:
 	KujakuEngine::Camera camera_;
 	KujakuEngine::DebugCamera debugCamera_;
 
-	// --- 蝶 ---
-
-	// 羽のモデル
-	std::unique_ptr<KujakuEngine::Model> modelButterflyWingRight_ = nullptr;
-	std::unique_ptr<KujakuEngine::Model> modelButterflyWingLeft_ = nullptr;
-
-	// 鱗粉のパーティクルモデル
-	std::unique_ptr<KujakuEngine::ParticleModel> particleModelButterflyScales_ = nullptr;
-
-	std::unique_ptr<Butterfly> butterfly_ = nullptr;
+	// --- 蜘蛛 ---
+	std::unique_ptr<KujakuEngine::Model> spiderWalkGrid_ = nullptr;
+	std::unique_ptr<KujakuEngine::ParticleModel> particleModel_ = nullptr;
+	std::unique_ptr<Spider> spider_ = nullptr;
 };
