@@ -23,17 +23,17 @@ void Spider::Initialize(KujakuEngine::Model* spiderWalkGrid, KujakuEngine::Parti
 	particleEmitter_.emitShape_ = ParticleEmitter::kEmitSegmentEdge;
 	particleEmitter_.count_ = 40;
 	particleEmitter_.frequency_ = 0.01f;
-	particleEmitter_.particleScale_ = {particleAllScale_, particleAllScale_, particleAllScale_};
-	particleEmitter_.lifeTimeMinMax_ = {0.1f, 0.3f};
+	particleEmitter_.particleScale_ = { particleAllScale_, particleAllScale_, particleAllScale_ };
+	particleEmitter_.lifeTimeMinMax_ = { 0.1f, 0.3f };
 
-	modelSpiderWalkGrid_->SetColor({0.1f, 0.1f, 0.1f, 0.5f});
+	modelSpiderWalkGrid_->SetColor({ 0.1f, 0.1f, 0.1f, 0.5f });
 	// トランスフォーム
 	// ------------------------------------------
 	worldTransform_.Initialize();
 	worldTransform_.translation_.y = 1.0f;
 
 	worldTransformGrid_.Initialize();
-	worldTransformGrid_.scale_ = {2.0f, 1.0f, 2.0f};
+	worldTransformGrid_.scale_ = { 2.0f, 1.0f, 2.0f };
 }
 
 void Spider::Update() {
@@ -45,8 +45,6 @@ void Spider::Update() {
 }
 
 void Spider::Draw() {
-	modelSpiderWalkGrid_->Draw(worldTransformGrid_, *camera_, kFillModeWireframe);
-
 	ParticleModel::PreDraw();
 	particleEmitter_.Draw();
 	ParticleModel::PostDraw();
@@ -56,33 +54,39 @@ void Spider::Walk() {
 	switch (state_) {
 	case Spider::kAutoMove:
 
+		animTranslationTimer_ += Time::GetDeltaTime();
+		worldTransform_.translation_.x = std::cosf(animTranslationTimer_ * 0.5f) * 6.0f;
+		worldTransform_.translation_.z = std::sinf(animTranslationTimer_ * 0.5f) * 6.0f;
 		break;
 	case Spider::kSelfMove:
+		if (Input::GetKey(DIK_UP)) {
+			worldTransform_.translation_.z += walkSpeed_ * Time::GetDeltaTime();
+		}
+
+		if (Input::GetKey(DIK_DOWN)) {
+			worldTransform_.translation_.z -= walkSpeed_ * Time::GetDeltaTime();
+		}
+
+		if (Input::GetKey(DIK_RIGHT)) {
+			worldTransform_.translation_.x += walkSpeed_ * Time::GetDeltaTime();
+		}
+
+		if (Input::GetKey(DIK_LEFT)) {
+			worldTransform_.translation_.x -= walkSpeed_ * Time::GetDeltaTime();
+		}
 		break;
 	default:
 		break;
 	}
 
-	animTranslationTimer_ += Time::GetDeltaTime();
-	 worldTransform_.translation_.x = std::cosf(animTranslationTimer_) * 5.0f;
-	 worldTransform_.translation_.z = std::sinf(animTranslationTimer_) * 5.0f;
-
-	if (Input::GetKey(DIK_UP)) {
-		worldTransform_.translation_.z += walkSpeed_ * Time::GetDeltaTime();
+	if (Input::GetKeyTrigger(DIK_L)) {
+		if (state_ == kAutoMove) {
+			state_ = kSelfMove;
+		}
+		else if (state_ == kSelfMove) {
+			state_ = kAutoMove;
+		}
 	}
-
-	if (Input::GetKey(DIK_DOWN)) {
-		worldTransform_.translation_.z -= walkSpeed_ * Time::GetDeltaTime();
-	}
-
-	if (Input::GetKey(DIK_RIGHT)) {
-		worldTransform_.translation_.x += walkSpeed_ * Time::GetDeltaTime();
-	}
-
-	if (Input::GetKey(DIK_LEFT)) {
-		worldTransform_.translation_.x -= walkSpeed_ * Time::GetDeltaTime();
-	}
-
 
 	worldTransformGrid_.UpdateMatrix(*camera_);
 	worldTransform_.UpdateMatrix(*camera_);
@@ -94,7 +98,7 @@ void Spider::UpdateParticle() {
 	std::vector<VertexData> vertices = modelSpiderWalkGrid_->GetVertices();
 
 	for (const auto& vertex : vertices) {
-		Vector3 vertexPos = {vertex.position.x, vertex.position.y, vertex.position.z};
+		Vector3 vertexPos = { vertex.position.x, vertex.position.y, vertex.position.z };
 		if (Length(worldTransform_.GetWorldPosition() - Transform(vertexPos, worldTransformGrid_.matWorld_)) > 5.0f) {
 			continue;
 		}

@@ -62,7 +62,7 @@ public:
 	Vector2 lifeTimeMinMax_ = {1.0f, 3.0f};
 
 	// セグメント発生用：ベジェ曲線の制御点を値だけ上へ持ち上げる。
-	float segmentCurveHeightRate_ = 0.12f;
+	float segmentCurveHeightRate_ = 1.0f;
 
 private:
 	// 生成可能か

@@ -6,7 +6,8 @@ void ButterflyScene::Initialize() {
 	// カメラ初期化
 	// ------------------------------------------
 	camera_.Initialize();
-	camera_.translation_.z = -10.0f;
+	camera_.translation_ = { -10.0f, 0.0f, -10.0f };
+	camera_.rotation_.y = std::numbers::pi_v<float> *0.25f;
 	camera_.UpdateMatrix();
 	debugCamera_.Initialize(camera_.rotation_, camera_.translation_);
 
@@ -23,10 +24,6 @@ void ButterflyScene::Initialize() {
 }
 
 void ButterflyScene::Update() {
-	// 蝶更新
-	// ------------------------------------------
-	butterfly_->Update();
-
 	// カメラ更新
 	// ------------------------------------------
 	debugCamera_.Update();
@@ -34,6 +31,10 @@ void ButterflyScene::Update() {
 	camera_.matView = debugCamera_.GetViewMatrix();
 	camera_.UpdateProjectionMatrix();
 	camera_.TransferConstBuffer();
+
+	// 蝶更新
+	// ------------------------------------------
+	butterfly_->Update();
 }
 
 void ButterflyScene::Draw() {

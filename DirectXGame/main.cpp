@@ -14,6 +14,10 @@ enum class Scene {
 };
 
 Scene scene = Scene::kUnknown;
+std::unique_ptr<Sprite> spriteCameraInfo = nullptr;
+std::unique_ptr<Sprite> spriteSceneInfoButterfly = nullptr;
+std::unique_ptr<Sprite> spriteSceneInfoSpider = nullptr;
+std::unique_ptr<Sprite> spriteSceneInfoTriangle = nullptr;
 
 std::unique_ptr<TriangleScene> triangleScene = nullptr;
 std::unique_ptr<ButterflyScene> butterflyScene = nullptr;
@@ -28,10 +32,19 @@ void ChangeScene();
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	// エンジンの初期化
-	KujakuEngine::Initialize(L"LE2B_04_オオツカ_ダイチ_CG2_評価課題01");
+	KujakuEngine::Initialize(L"リテラシー");
 
 	// タイトルシーンの初期化
 	scene = Scene::kButtefly;
+
+	uint32_t textureIndexCameraInfo = TextureManager::GetInstance()->LoadTexture("Resources/camera_info.png");
+	uint32_t textureIndexSceneInfoButterfly = TextureManager::GetInstance()->LoadTexture("Resources/scene_info_b.png");
+	uint32_t textureIndexSceneInfoSpider = TextureManager::GetInstance()->LoadTexture("Resources/scene_info_s.png");
+	uint32_t textureIndexSceneInfoTriangle = TextureManager::GetInstance()->LoadTexture("Resources/scene_info_t.png");
+	spriteCameraInfo = std::unique_ptr<Sprite>(Sprite::Create(textureIndexCameraInfo, { 0.0f, 720.0f - 96.0f }, 480, 96));
+	spriteSceneInfoButterfly = std::unique_ptr<Sprite>(Sprite::Create(textureIndexSceneInfoButterfly, { 1280.0f - 270.0f - 32.0f, 720.0f - 96.0f }, 270, 96));
+	spriteSceneInfoSpider = std::unique_ptr<Sprite>(Sprite::Create(textureIndexSceneInfoSpider, { 1280.0f - 270.0f - 32.0f, 720.0f - 96.0f }, 270, 96));
+	spriteSceneInfoTriangle = std::unique_ptr<Sprite>(Sprite::Create(textureIndexSceneInfoTriangle, { 1280.0f - 270.0f - 32.0f,720.0f - 96.0f }, 270, 96));
 
 	InitScene();
 
@@ -51,6 +64,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		KujakuEngine::PreDraw();
 
 		DrawScene();
+
 
 		KujakuEngine::PostDraw();
 	}
@@ -99,7 +113,8 @@ void ChangeScene() {
 			triangleScene.reset();
 			triangleScene = std::make_unique<TriangleScene>();
 			triangleScene->Initialize();
-		} else if (triangleScene->IsFinished()) {
+		}
+		else if (triangleScene->IsFinished()) {
 			// シーン変更
 			scene = Scene::kButtefly;
 			// 旧シーンの解放
@@ -115,7 +130,8 @@ void ChangeScene() {
 			butterflyScene.reset();
 			butterflyScene = std::make_unique<ButterflyScene>();
 			butterflyScene->Initialize();
-		} else if (butterflyScene->IsFinished()) {
+		}
+		else if (butterflyScene->IsFinished()) {
 			// シーン変更
 			scene = Scene::kSpider;
 			// 旧シーンの解放
@@ -131,7 +147,8 @@ void ChangeScene() {
 			spiderScene.reset();
 			spiderScene = std::make_unique<SpiderScene>();
 			spiderScene->Initialize();
-		} else if (spiderScene->IsFinished()) {
+		}
+		else if (spiderScene->IsFinished()) {
 			// シーン変更
 			scene = Scene::kTriangle;
 			// 旧シーンの解放
@@ -164,12 +181,24 @@ void DrawScene() {
 	switch (scene) {
 	case Scene::kTriangle:
 		triangleScene->Draw();
+		Sprite::PreDraw();
+		spriteCameraInfo->Draw();
+		spriteSceneInfoTriangle->Draw();
+		Sprite::PostDraw();
 		break;
 	case Scene::kButtefly:
 		butterflyScene->Draw();
+		Sprite::PreDraw();
+		spriteCameraInfo->Draw();
+		spriteSceneInfoButterfly->Draw();
+		Sprite::PostDraw();
 		break;
 	case Scene::kSpider:
 		spiderScene->Draw();
+		Sprite::PreDraw();
+		spriteCameraInfo->Draw();
+		spriteSceneInfoSpider->Draw();
+		Sprite::PostDraw();
 		break;
 	default:
 		break;

@@ -18,12 +18,12 @@ public:
 	/// <summary>
 	/// シーンの再生成リクエスト
 	/// </summary>
-	bool GetReloadRequested() const { return KujakuEngine::Input::GetKeyTrigger(DIK_P); }
+	bool GetReloadRequested() const { return KujakuEngine::Input::GetKeyTrigger(DIK_R); }
 
 	/// <summary>
 	/// シーン終了
 	/// </summary>
-	bool IsFinished() const { return KujakuEngine::Input::GetKeyTrigger(DIK_SPACE); }
+	bool IsFinished() const { return KujakuEngine::Input::GetKeyTrigger(DIK_F); }
 
 private:
 	// --- シーン ---

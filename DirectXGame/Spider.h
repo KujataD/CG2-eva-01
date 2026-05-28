@@ -45,5 +45,5 @@ private:
 
 	const KujakuEngine::Camera* camera_ = nullptr;	
 
-	State state_ = kSelfMove;
+	State state_ = kAutoMove;
 };

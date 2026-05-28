@@ -38,7 +38,7 @@ void Butterfly::Initialize(KujakuEngine::Model* modelWingLeft, KujakuEngine::Mod
 	particleEmitterButterflyWingLeft_.count_ = 20;
 	particleEmitterButterflyWingLeft_.frequency_ = 0.02f;
 	particleEmitterButterflyWingLeft_.particleScale_ = {particleAllScale_, particleAllScale_, particleAllScale_};
-	particleEmitterButterflyWingLeft_.lifeTimeMinMax_ = {0.1f, 1.5f};
+	particleEmitterButterflyWingLeft_.lifeTimeMinMax_ = {0.1f, 1.0f};
 	particleEmitterButterflyWingLeft_.SetSourceVertices(modelWingLeft_->GetVertices(), &worldTransformButterflyWingLeft_);
 
 	particleEmitterButterflyWingRight_.Initialize(particleModelTriangle_);
@@ -65,8 +65,8 @@ void Butterfly::Update() {
 }
 
 void Butterfly::Draw() {
-	modelWingLeft_->Draw(worldTransformButterflyWingLeft_, *camera_, kFillModeWireframe);
-	modelWingRight_->Draw(worldTransformButterflyWingRight_, *camera_, kFillModeWireframe);
+	//modelWingLeft_->Draw(worldTransformButterflyWingLeft_, *camera_, kFillModeWireframe);
+	//modelWingRight_->Draw(worldTransformButterflyWingRight_, *camera_, kFillModeWireframe);
 
 	ParticleModel::PreDraw();
 	particleEmitterButterflyWingLeft_.Draw();
