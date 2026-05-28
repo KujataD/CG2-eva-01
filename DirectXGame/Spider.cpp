@@ -21,10 +21,10 @@ void Spider::Initialize(KujakuEngine::Model* spiderWalkGrid, KujakuEngine::Parti
 
 	particleEmitter_.Initialize(particleModelTriangle_);
 	particleEmitter_.emitShape_ = ParticleEmitter::kEmitSegmentEdge;
-	particleEmitter_.count_ = 30;
+	particleEmitter_.count_ = 40;
 	particleEmitter_.frequency_ = 0.01f;
 	particleEmitter_.particleScale_ = { particleAllScale_, particleAllScale_, particleAllScale_ };
-	particleEmitter_.lifeTimeMinMax_ = { 0.1f, 0.3f };
+	particleEmitter_.lifeTimeMinMax_ = { 0.1f, 0.2f };
 
 	modelSpiderWalkGrid_->SetColor({ 0.1f, 0.1f, 0.1f, 0.5f });
 	// トランスフォーム

@@ -6,8 +6,8 @@ void SpiderScene::Initialize() {
 	// カメラ初期化
 	// ------------------------------------------
 	camera_.Initialize();
-	camera_.translation_ = {0.0f, 23.0f, -14.0f};
-	camera_.rotation_ = {1.085f, 0.0f, 0.0f};
+	camera_.translation_ = {0.0f, 5.0f, -14.0f};
+	camera_.rotation_ = {0.285f, 0.0f, 0.0f};
 	camera_.UpdateMatrix();
 	debugCamera_.Initialize(camera_.rotation_, camera_.translation_);
 
