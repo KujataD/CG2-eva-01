@@ -34,9 +34,11 @@ public:
 	// 三角形
 	std::unique_ptr<KujakuEngine::Model> modelTriangleA_;
 	KujakuEngine::WorldTransform worldTransformTriangleA_;
+	KujakuEngine::Vector4 colorTriangleA_ = {1.0f, 1.0f, 1.0f, 1.0f};
 
 	std::unique_ptr<KujakuEngine::Model> modelTriangleB_;
 	KujakuEngine::WorldTransform worldTransformTriangleB_;
+	KujakuEngine::Vector4 colorTriangleB_ = {1.0f, 1.0f, 1.0f, 1.0f};
 
 	// テクスチャインデックス
 	uint32_t textureIndexUVChecker_;

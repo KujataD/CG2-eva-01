@@ -47,6 +47,9 @@ void TriangleScene::Update() {
 
 	// 各モデルの更新
 	// ------------------------------------------
+	modelTriangleA_->SetColor(colorTriangleA_);
+	modelTriangleB_->SetColor(colorTriangleB_);
+
 	switch (textureModeA_)
 	{
 	case TriangleScene::TextureMode::UVChecker:
@@ -88,6 +91,7 @@ void TriangleScene::Update() {
 	ImGui::Begin("Triangle Manager");
 
 	if (ImGui::TreeNode("Triangle A")) {
+		ImGui::ColorEdit3("Color", &colorTriangleA_.x, 0.01f);
 		ImGui::DragFloat3("Translation", &worldTransformTriangleA_.translation_.x, 0.01f);
 		ImGui::DragFloat3("Rotation", &worldTransformTriangleA_.rotation_.x, 0.01f);
 		ImGui::DragFloat3("Scale", &worldTransformTriangleA_.scale_.x, 0.01f);
@@ -98,6 +102,7 @@ void TriangleScene::Update() {
 	}
 
 	if (ImGui::TreeNode("Triangle B")) {
+		ImGui::ColorEdit3("Color", &colorTriangleB_.x, 0.01f);
 		ImGui::DragFloat3("Translation", &worldTransformTriangleB_.translation_.x, 0.01f);
 		ImGui::DragFloat3("Rotation", &worldTransformTriangleB_.rotation_.x, 0.01f);
 		ImGui::DragFloat3("Scale", &worldTransformTriangleB_.scale_.x, 0.01f);
