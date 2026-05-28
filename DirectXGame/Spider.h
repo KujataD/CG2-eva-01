@@ -37,7 +37,7 @@ private:
 	KujakuEngine::ParticleEmitter particleEmitter_;
 
 	// パーティクルのスケール
-	static inline float particleAllScale_ = 0.2f;
+	static inline float particleAllScale_ = 0.3f;
 
 	static inline float walkSpeed_ = 5.0f;
 	

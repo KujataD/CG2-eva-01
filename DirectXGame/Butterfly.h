@@ -35,7 +35,7 @@ private:
 	KujakuEngine::ParticleEmitter particleEmitterButterflyWingLeft_;
 
 	// パーティクルのスケール
-	static inline float particleAllScale_ = 0.02f;
+	static inline float particleAllScale_ = 0.05f;
 
 	// アニメーション
 	float animWingRotationTimer_ = 0.0f;

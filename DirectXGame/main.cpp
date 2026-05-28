@@ -14,10 +14,14 @@ enum class Scene {
 };
 
 Scene scene = Scene::kUnknown;
+
+
+uint32_t textureIndexCameraInfo;
+uint32_t textureIndexSceneInfoButterfly;
+uint32_t textureIndexSceneInfoSpider;
+uint32_t textureIndexSceneInfoTriangle;
 std::unique_ptr<Sprite> spriteCameraInfo = nullptr;
-std::unique_ptr<Sprite> spriteSceneInfoButterfly = nullptr;
-std::unique_ptr<Sprite> spriteSceneInfoSpider = nullptr;
-std::unique_ptr<Sprite> spriteSceneInfoTriangle = nullptr;
+std::unique_ptr<Sprite> spriteSceneInfo = nullptr;
 
 std::unique_ptr<TriangleScene> triangleScene = nullptr;
 std::unique_ptr<ButterflyScene> butterflyScene = nullptr;
@@ -37,15 +41,12 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	// タイトルシーンの初期化
 	scene = Scene::kButtefly;
 
-	uint32_t textureIndexCameraInfo = TextureManager::GetInstance()->LoadTexture("Resources/camera_info.png");
-	uint32_t textureIndexSceneInfoButterfly = TextureManager::GetInstance()->LoadTexture("Resources/scene_info_b.png");
-	uint32_t textureIndexSceneInfoSpider = TextureManager::GetInstance()->LoadTexture("Resources/scene_info_s.png");
-	uint32_t textureIndexSceneInfoTriangle = TextureManager::GetInstance()->LoadTexture("Resources/scene_info_t.png");
+	textureIndexCameraInfo = TextureManager::GetInstance()->LoadTexture("Resources/camera_info.png");
+	textureIndexSceneInfoButterfly = TextureManager::GetInstance()->LoadTexture("Resources/scene_info_b.png");
+	textureIndexSceneInfoSpider = TextureManager::GetInstance()->LoadTexture("Resources/scene_info_s.png");
+	textureIndexSceneInfoTriangle = TextureManager::GetInstance()->LoadTexture("Resources/scene_info_t.png");
 	spriteCameraInfo = std::unique_ptr<Sprite>(Sprite::Create(textureIndexCameraInfo, { 0.0f, 720.0f - 96.0f }, 480, 96));
-	spriteSceneInfoButterfly = std::unique_ptr<Sprite>(Sprite::Create(textureIndexSceneInfoButterfly, { 1280.0f - 270.0f - 32.0f, 720.0f - 96.0f }, 270, 96));
-	spriteSceneInfoSpider = std::unique_ptr<Sprite>(Sprite::Create(textureIndexSceneInfoSpider, { 1280.0f - 270.0f - 32.0f, 720.0f - 96.0f }, 270, 96));
-	spriteSceneInfoTriangle = std::unique_ptr<Sprite>(Sprite::Create(textureIndexSceneInfoTriangle, { 1280.0f - 270.0f - 32.0f,720.0f - 96.0f }, 270, 96));
-
+	spriteSceneInfo = std::unique_ptr<Sprite>(Sprite::Create(textureIndexSceneInfoButterfly, { 1280.0f - 270.0f - 32.0f, 720.0f - 96.0f }, 270, 96));
 	InitScene();
 
 	// メインループ
@@ -183,21 +184,24 @@ void DrawScene() {
 		triangleScene->Draw();
 		Sprite::PreDraw();
 		spriteCameraInfo->Draw();
-		spriteSceneInfoTriangle->Draw();
+		spriteSceneInfo->SetTexture(textureIndexSceneInfoTriangle);
+		spriteSceneInfo->Draw();
 		Sprite::PostDraw();
 		break;
 	case Scene::kButtefly:
 		butterflyScene->Draw();
 		Sprite::PreDraw();
 		spriteCameraInfo->Draw();
-		spriteSceneInfoButterfly->Draw();
+		spriteSceneInfo->SetTexture(textureIndexSceneInfoButterfly);
+		spriteSceneInfo->Draw();
 		Sprite::PostDraw();
 		break;
 	case Scene::kSpider:
 		spiderScene->Draw();
 		Sprite::PreDraw();
 		spriteCameraInfo->Draw();
-		spriteSceneInfoSpider->Draw();
+		spriteSceneInfo->SetTexture(textureIndexSceneInfoSpider);
+		spriteSceneInfo->Draw();
 		Sprite::PostDraw();
 		break;
 	default:

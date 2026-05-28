@@ -21,7 +21,7 @@ void Spider::Initialize(KujakuEngine::Model* spiderWalkGrid, KujakuEngine::Parti
 
 	particleEmitter_.Initialize(particleModelTriangle_);
 	particleEmitter_.emitShape_ = ParticleEmitter::kEmitSegmentEdge;
-	particleEmitter_.count_ = 40;
+	particleEmitter_.count_ = 30;
 	particleEmitter_.frequency_ = 0.01f;
 	particleEmitter_.particleScale_ = { particleAllScale_, particleAllScale_, particleAllScale_ };
 	particleEmitter_.lifeTimeMinMax_ = { 0.1f, 0.3f };
@@ -79,7 +79,7 @@ void Spider::Walk() {
 		break;
 	}
 
-	if (Input::GetKeyTrigger(DIK_L)) {
+	if (Input::GetKeyTrigger(DIK_V)) {
 		if (state_ == kAutoMove) {
 			state_ = kSelfMove;
 		}

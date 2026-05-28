@@ -18,7 +18,7 @@ void SpiderScene::Initialize() {
 	worldTransformGround_.scale_ = { 3.0f, 1.0f, 3.0f };
 	worldTransformGround_.translation_.y = -1.0f;
 
-	modelGround_->SetColor({ 0.01f, 0.01f, 0.01f, 1.0f });
+	modelGround_->SetColor({ 0.05f, 0.01f, 0.01f, 1.0f });
 	// 蝶
 	// ------------------------------------------
 	modelSpiderWalkGrid_ = std::unique_ptr<Model>(Model::CreateFromOBJ("spider_walk_grid"));
