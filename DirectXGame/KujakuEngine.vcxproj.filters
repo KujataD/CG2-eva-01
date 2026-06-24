@@ -240,9 +240,6 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="TriangleScene.cpp">
-      <Filter>ソース ファイル\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="ButteflyScene.cpp">
       <Filter>ソース ファイル\Scenes</Filter>
     </ClCompile>
@@ -433,9 +430,6 @@
     </ClInclude>
     <ClInclude Include="KujakuEngine\math\MathUtil.h">
       <Filter>KujakuEngine\math</Filter>
-    </ClInclude>
-    <ClInclude Include="TriangleScene.h">
-      <Filter>ソース ファイル\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="ButterflyScene.h">
       <Filter>ソース ファイル\Scenes</Filter>
